@@ -11,7 +11,7 @@
 
         <!-- Toolbar -->
         <Border Grid.Row="0" Style="{StaticResource ToolbarBorder}">
-            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto" ColumnSpacing="8" RowDefinitions="Auto">
+            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="8" RowDefinitions="Auto">
 
                 <!-- Environment picker -->
                 <Border Grid.Column="0" Style="{StaticResource PickerFieldBorder}">
@@ -60,18 +60,34 @@
                         Command="{Binding ExportConfigCommand}"
                         ToolTipProperties.Text="Export configuration to JSON file" />
 
-                <!-- Refresh all -->
+                <!-- Import config -->
                 <Button Grid.Column="7"
+                        Text="Import"
+                        Style="{StaticResource SecondaryButton}"
+                        Command="{Binding ImportConfigCommand}"
+                        ToolTipProperties.Text="Import configuration from JSON file" />
+
+                <!-- Refresh all -->
+                <Button Grid.Column="8"
                         Text="Refresh"
                         Style="{StaticResource SecondaryButton}"
                         Command="{Binding RefreshAllCommand}"
                         ToolTipProperties.Text="Check all modules now" />
 
                 <!-- Add module -->
-                <Button Grid.Column="8"
+                <Button Grid.Column="9"
                         Text="+ Add Module"
                         Style="{StaticResource PrimaryButton}"
                         Command="{Binding AddModuleCommand}" />
+
+                <!-- Settings -->
+                <Button Grid.Column="10"
+                        Text="⚙"
+                        Style="{StaticResource SecondaryButton}"
+                        Command="{Binding OpenSettingsCommand}"
+                        ToolTipProperties.Text="Settings"
+                        MinimumWidthRequest="40"
+                        Padding="10,8" />
             </Grid>
         </Border>
 

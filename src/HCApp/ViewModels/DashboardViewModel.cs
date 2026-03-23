@@ -44,6 +44,8 @@ public partial class DashboardViewModel : ObservableObject
         if (Environments.Count > 0)
             SelectedEnvironment = Environments[0];
 
+        _monitoringService.NotificationsEnabled = _config.Settings.NotificationsEnabled;
+
         IsLoading = false;
     }
 
@@ -186,6 +188,48 @@ public partial class DashboardViewModel : ObservableObject
         var module = SelectedEnvironment.GetEffectiveModules().FirstOrDefault(m => m.Id == moduleVm.ModuleId);
         if (module is null) return;
         await _monitoringService.CheckModuleNowAsync(SelectedEnvironment, module);
+    }
+
+    [RelayCommand]
+    private async Task OpenSettingsAsync()
+    {
+        await Shell.Current.GoToAsync("settings");
+    }
+
+    [RelayCommand]
+    private async Task ImportConfigAsync()
+    {
+        var result = await FilePicker.Default.PickAsync(new PickOptions
+        {
+            PickerTitle = "Import configuration",
+            FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
+                { DevicePlatform.MacCatalyst, new[] { "public.json", "json" } },
+                { DevicePlatform.WinUI, new[] { ".json" } }
+            })
+        });
+
+        if (result is null) return;
+
+        try
+        {
+            await using var stream = await result.OpenReadAsync();
+            var imported = await System.Text.Json.JsonSerializer.DeserializeAsync<Models.AppConfiguration>(stream);
+            if (imported is null) return;
+
+            _config = imported;
+            await _configStore.SaveAsync(_config);
+
+            _monitoringService.StopAll();
+            Environments = new ObservableCollection<MonitorEnvironment>(_config.Environments);
+            SelectedEnvironment = Environments.FirstOrDefault();
+
+            await Shell.Current.DisplayAlertAsync("Import", "Configuration imported successfully.", "OK");
+        }
+        catch
+        {
+            await Shell.Current.DisplayAlertAsync("Import Failed", "The selected file could not be imported.", "OK");
+        }
     }
 
     [RelayCommand]

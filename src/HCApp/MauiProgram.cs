@@ -31,11 +31,13 @@ public static class MauiProgram
 		builder.Services.AddTransient<DashboardViewModel>();
 		builder.Services.AddTransient<EnvironmentEditViewModel>();
 		builder.Services.AddTransient<ModuleDetailViewModel>();
+		builder.Services.AddTransient<SettingsViewModel>();
 
 		// Pages
 		builder.Services.AddTransient<DashboardPage>();
 		builder.Services.AddTransient<EnvironmentEditPage>();
 		builder.Services.AddTransient<ModuleDetailPage>();
+		builder.Services.AddTransient<SettingsPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

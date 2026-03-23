@@ -33,6 +33,9 @@ public partial class ModuleDetailViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<EntryViewModel> _entries = [];
 
+    [ObservableProperty]
+    private ObservableCollection<StatusHistoryEntry> _history = [];
+
     partial void OnModuleChanged(MonitorModule value)
     {
         StatusText = value.LastStatus.ToString();
@@ -40,6 +43,8 @@ public partial class ModuleDetailViewModel : ObservableObject
         TotalDuration = value.LastDuration ?? "--";
         LastChecked = value.LastChecked?.ToString("HH:mm:ss") ?? "Never";
         Error = value.LastError;
+
+        History = new ObservableCollection<StatusHistoryEntry>(value.StatusHistory);
 
         Entries.Clear();
         if (value.LastResponse?.Entries is not null)

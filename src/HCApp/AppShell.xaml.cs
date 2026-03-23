@@ -9,5 +9,6 @@ public partial class AppShell : Shell
 		InitializeComponent();
 		Routing.RegisterRoute("environment-edit", typeof(EnvironmentEditPage));
 		Routing.RegisterRoute("module-detail", typeof(ModuleDetailPage));
+		Routing.RegisterRoute("settings", typeof(SettingsPage));
 	}
 }

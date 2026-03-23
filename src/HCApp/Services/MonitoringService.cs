@@ -10,6 +10,8 @@ public sealed class MonitoringService : IDisposable
     private readonly IConfigurationStore _configStore;
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _pollingTasks = new();
 
+    public bool NotificationsEnabled { get; set; } = true;
+
     public event Action<string, MonitorModule>? ModuleStatusUpdated;
 
     public MonitoringService(
@@ -101,8 +103,13 @@ public sealed class MonitoringService : IDisposable
         // Notify on status transition (skip initial Unknown -> X)
         if (previousStatus != HealthStatus.Unknown && previousStatus != result.Status)
         {
-            _notificationService.SendStatusChange(environment.Name, module.Name, previousStatus, result.Status);
+            if (NotificationsEnabled)
+                _notificationService.SendStatusChange(environment.Name, module.Name, previousStatus, result.Status);
         }
+
+        module.StatusHistory.Insert(0, new StatusHistoryEntry(result.Status, DateTime.Now));
+        if (module.StatusHistory.Count > 10)
+            module.StatusHistory.RemoveAt(module.StatusHistory.Count - 1);
 
         ModuleStatusUpdated?.Invoke(environment.Id, module);
     }

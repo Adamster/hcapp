@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 
 namespace HCApp.Models;
 
+public sealed record StatusHistoryEntry(HealthStatus Status, DateTime Timestamp);
+
 public sealed class MonitorModule
 {
     [JsonPropertyName("id")]
@@ -27,4 +29,7 @@ public sealed class MonitorModule
 
     [JsonIgnore]
     public string? LastError { get; set; }
+
+    [JsonIgnore]
+    public List<StatusHistoryEntry> StatusHistory { get; } = new();
 }
