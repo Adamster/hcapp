@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:HCApp.ViewModels"
+             xmlns:models="clr-namespace:HCApp.Models"
+             x:Class="HCApp.Views.EnvironmentEditPage"
+             x:DataType="vm:EnvironmentEditViewModel"
+             Title="Edit Environment">
+
+    <Grid RowDefinitions="*,Auto,Auto">
+
+        <!-- Scrollable form body -->
+        <ScrollView Grid.Row="0">
+            <Grid ColumnDefinitions="*,400" Padding="32,28,32,0">
+
+                <!-- Left column: connection settings -->
+                <VerticalStackLayout Grid.Column="0" Spacing="20" Margin="0,0,24,0">
+
+                    <!-- Connection section -->
+                    <Label Text="Connection"
+                           Style="{StaticResource TitleLabel}"
+                           Margin="0,0,0,4" />
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Environment Name" Style="{StaticResource FieldLabelStyle}" />
+                        <Border Style="{StaticResource InputFieldBorder}">
+                            <Entry Text="{Binding Name}"
+                                   Placeholder="e.g. Production"
+                                   ReturnType="Next" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Base URL" Style="{StaticResource FieldLabelStyle}" />
+                        <Border Style="{StaticResource InputFieldBorder}">
+                            <Entry Text="{Binding BaseUrl}"
+                                   Placeholder="https://api.example.com/health"
+                                   Keyboard="Url"
+                                   ReturnType="Next" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Polling Interval (seconds)" Style="{StaticResource FieldLabelStyle}" />
+                        <Border Style="{StaticResource InputFieldBorder}"
+                                MaximumWidthRequest="160"
+                                HorizontalOptions="Start">
+                            <Entry Text="{Binding PollingInterval}"
+                                   Keyboard="Numeric"
+                                   ReturnType="Done" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Headers section -->
+                    <Label Text="Request Headers"
+                           Style="{StaticResource TitleLabel}"
+                           Margin="0,12,0,4" />
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Custom Headers (one per line, Key: Value)"
+                               Style="{StaticResource FieldLabelStyle}" />
+                        <Border Style="{StaticResource InputFieldBorder}"
+                                Padding="10,8">
+                            <Editor Text="{Binding HeadersText}"
+                                    Placeholder="Authorization: Bearer token123&#10;X-Api-Key: abc123"
+                                    HeightRequest="100"
+                                    AutoSize="Disabled" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+
+                <!-- Right column: modules list -->
+                <VerticalStackLayout Grid.Column="1" Spacing="12">
+
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label Grid.Column="0"
+                               Text="Modules"
+                               Style="{StaticResource TitleLabel}"
+                               VerticalOptions="Center" />
+                        <Button Grid.Column="1"
+                                Text="+ Add Module"
+                                Style="{StaticResource SecondaryButton}"
+                                Command="{Binding AddModuleCommand}"
+                                VerticalOptions="Center" />
+                    </Grid>
+
+                    <Label Text="Modules define the health check paths appended to the base URL."
+                           Style="{StaticResource CaptionLabel}"
+                           LineBreakMode="WordWrap"
+                           Margin="0,-4,0,0" />
+
+                    <CollectionView ItemsSource="{Binding Modules}">
+
+                        <CollectionView.EmptyView>
+                            <Border Style="{StaticResource CardBorder}" Padding="16,12">
+                                <Label Text="No modules added yet. Use '+ Add Module' to add one."
+                                       Style="{StaticResource SecondaryLabel}"
+                                       LineBreakMode="WordWrap"
+                                       HorizontalTextAlignment="Center" />
+                            </Border>
+                        </CollectionView.EmptyView>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:MonitorModule">
+                                <Border Style="{StaticResource CardBorder}"
+                                        Padding="12,10"
+                                        Margin="0,0,0,6">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                                            <Label Text="{Binding Name}"
+                                                   Style="{StaticResource BodyLargeLabel}"
+                                                   FontFamily="OpenSansSemiBold"
+                                                   HorizontalOptions="Fill" />
+                                        </VerticalStackLayout>
+                                        <Button Grid.Column="1"
+                                                Text="Remove"
+                                                Style="{StaticResource DangerButton}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:EnvironmentEditViewModel}}, Path=RemoveModuleCommand}"
+                                                CommandParameter="{Binding .}"
+                                                Padding="12,6"
+                                                FontSize="{StaticResource FontSizeBody}"
+                                                MinimumHeightRequest="32" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+
+        <!-- Footer separator -->
+        <BoxView Grid.Row="1"
+                 HeightRequest="1"
+                 BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBorderLight}, Dark={StaticResource SurfaceBorderDark}}" />
+
+        <!-- Footer action bar -->
+        <Border Grid.Row="2"
+                StrokeShape="Rectangle"
+                StrokeThickness="0"
+                Stroke="Transparent"
+                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceSecondaryLight}, Dark={StaticResource SurfaceSecondaryDark}}"
+                Padding="32,12">
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                <BoxView Grid.Column="0" BackgroundColor="Transparent" />
+                <Button Grid.Column="1"
+                        Text="Cancel"
+                        Style="{StaticResource SecondaryButton}"
+                        Command="{Binding CancelCommand}"
+                        MinimumWidthRequest="88" />
+                <Button Grid.Column="2"
+                        Text="Save"
+                        Style="{StaticResource PrimaryButton}"
+                        Command="{Binding SaveCommand}"
+                        MinimumWidthRequest="88" />
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>
