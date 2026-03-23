@@ -12,7 +12,7 @@
 
         <!-- Toolbar -->
         <Border Grid.Row="0" Style="{StaticResource ToolbarBorder}">
-            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="8" VerticalOptions="Center" RowDefinitions="Auto">
+            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="8"  RowDefinitions="Auto" VerticalOptions="Center">
 
                 <!-- Environment selector -->
                 <controls:RotaryKnobView Grid.Column="0"
