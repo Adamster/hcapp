@@ -24,6 +24,7 @@
                 <!-- Add environment -->
                 <controls:SteampunkButton Grid.Column="1"
                         Text="New"
+                        VerticalOptions="Center"
                         Variant="Secondary"
                         Command="{Binding AddEnvironmentCommand}"
                         ToolTipProperties.Text="Add environment" />
@@ -31,6 +32,7 @@
                 <!-- Edit environment -->
                 <controls:SteampunkButton Grid.Column="2"
                         Text="Edit"
+                        VerticalOptions="Center"
                         Variant="Secondary"
                         Command="{Binding EditEnvironmentCommand}"
                         ToolTipProperties.Text="Edit selected environment" />
@@ -39,6 +41,7 @@
                 <controls:SteampunkButton Grid.Column="3"
                         Text="Clone"
                         Variant="Secondary"
+                        VerticalOptions="Center"
                         Command="{Binding CloneEnvironmentCommand}"
                         ToolTipProperties.Text="Clone selected environment" />
 
@@ -46,6 +49,7 @@
                 <controls:SteampunkButton Grid.Column="4"
                         Text="Delete"
                         Variant="Danger"
+                        VerticalOptions="Center"
                         Command="{Binding DeleteEnvironmentCommand}"
                         ToolTipProperties.Text="Delete selected environment" />
 
@@ -56,6 +60,7 @@
                 <controls:SteampunkButton Grid.Column="6"
                         Text="Export"
                         Variant="Secondary"
+                        VerticalOptions="Center"
                         Command="{Binding ExportConfigCommand}"
                         ToolTipProperties.Text="Export configuration to JSON file" />
 
@@ -63,6 +68,7 @@
                 <controls:SteampunkButton Grid.Column="7"
                         Text="Import"
                         Variant="Secondary"
+                        VerticalOptions="Center"
                         Command="{Binding ImportConfigCommand}"
                         ToolTipProperties.Text="Import configuration from JSON file" />
 
@@ -70,6 +76,7 @@
                 <controls:SteampunkButton Grid.Column="8"
                         Text="Refresh"
                         Variant="Secondary"
+                        VerticalOptions="Center"
                         Command="{Binding RefreshAllCommand}"
                         ToolTipProperties.Text="Check all modules now" />
 
@@ -77,12 +84,14 @@
                 <controls:SteampunkButton Grid.Column="9"
                         Text="+ Add Module"
                         Variant="Primary"
+                        VerticalOptions="Center"
                         Command="{Binding AddModuleCommand}" />
 
                 <!-- Settings -->
                 <controls:SteampunkButton Grid.Column="10"
                         Text="⚙"
                         Variant="Secondary"
+                        VerticalOptions="Center"
                         Command="{Binding OpenSettingsCommand}"
                         ToolTipProperties.Text="Settings"
                         MinimumWidthRequest="40" />
