@@ -15,11 +15,24 @@
             <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="8"  RowDefinitions="Auto" VerticalOptions="Center">
 
                 <!-- Environment selector -->
-                <controls:RotaryKnobView Grid.Column="0"
-                                         ItemsSource="{Binding Environments}"
-                                         SelectedItem="{Binding SelectedEnvironment}"
-                                         ItemDisplayBinding="{Binding Name}"
-                                         VerticalOptions="Center" />
+                <Border Grid.Column="0"
+                        BackgroundColor="#1A1510"
+                        Stroke="#4A3C28"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 3"
+                        Padding="4,2"
+                        MinimumWidthRequest="160"
+                        VerticalOptions="Center">
+                    <Picker ItemsSource="{Binding Environments}"
+                            SelectedItem="{Binding SelectedEnvironment}"
+                            ItemDisplayBinding="{Binding Name}"
+                            TextColor="#E8D5A0"
+                            FontFamily="Courier New"
+                            FontSize="12"
+                            BackgroundColor="Transparent"
+                            TitleColor="#7A6240"
+                            Title="Select environment" />
+                </Border>
 
                 <!-- Add environment -->
                 <controls:SteampunkButton Grid.Column="1"

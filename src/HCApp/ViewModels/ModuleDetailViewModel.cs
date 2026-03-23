@@ -44,7 +44,9 @@ public partial class ModuleDetailViewModel : ObservableObject
         LastChecked = value.LastChecked?.ToString("HH:mm:ss") ?? "Never";
         Error = value.LastError;
 
-        History = new ObservableCollection<StatusHistoryEntry>(value.StatusHistory);
+        History.Clear();
+        foreach (var h in value.StatusHistory)
+            History.Add(h);
 
         Entries.Clear();
         if (value.LastResponse?.Entries is not null)

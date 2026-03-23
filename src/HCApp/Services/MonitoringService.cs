@@ -54,13 +54,13 @@ public sealed class MonitoringService : IDisposable
         var url = string.IsNullOrEmpty(module.HealthCheckPath)
             ? environment.BaseUrl.TrimEnd('/')
             : BuildUrl(environment.BaseUrl, module.HealthCheckPath);
-        var result = await _healthCheckService.CheckAsync(url, environment.Headers);
+        var result = await _healthCheckService.CheckAsync(url, environment.Headers).ConfigureAwait(false);
         ApplyResult(environment, module, result);
     }
 
     public async Task CheckAllNowAsync(MonitorEnvironment environment)
     {
-        await PollAllModulesAsync(environment, CancellationToken.None);
+        await PollAllModulesAsync(environment, CancellationToken.None).ConfigureAwait(false);
     }
 
     private async Task PollLoopAsync(MonitorEnvironment environment, CancellationToken ct)
@@ -68,11 +68,11 @@ public sealed class MonitoringService : IDisposable
         using var timer = new PeriodicTimer(TimeSpan.FromSeconds(environment.PollingIntervalSeconds));
 
         // Run immediately on start
-        await PollAllModulesAsync(environment, ct);
+        await PollAllModulesAsync(environment, ct).ConfigureAwait(false);
 
-        while (await timer.WaitForNextTickAsync(ct))
+        while (await timer.WaitForNextTickAsync(ct).ConfigureAwait(false))
         {
-            await PollAllModulesAsync(environment, ct);
+            await PollAllModulesAsync(environment, ct).ConfigureAwait(false);
         }
     }
 
@@ -84,11 +84,11 @@ public sealed class MonitoringService : IDisposable
             var url = string.IsNullOrEmpty(module.HealthCheckPath)
                 ? environment.BaseUrl.TrimEnd('/')
                 : BuildUrl(environment.BaseUrl, module.HealthCheckPath);
-            var result = await _healthCheckService.CheckAsync(url, environment.Headers, ct);
+            var result = await _healthCheckService.CheckAsync(url, environment.Headers, ct).ConfigureAwait(false);
             ApplyResult(environment, module, result);
         });
 
-        await Task.WhenAll(tasks);
+        await Task.WhenAll(tasks).ConfigureAwait(false);
     }
 
     private void ApplyResult(MonitorEnvironment environment, MonitorModule module, HealthCheckResult result)

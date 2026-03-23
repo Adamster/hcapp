@@ -19,14 +19,14 @@ public partial class EnvironmentStatusViewModel : ObservableObject
 
     public void Recompute(IEnumerable<MonitorModule> modules)
     {
-        var statuses = modules.Select(m => m.LastStatus).ToList();
-        if (statuses.Contains(HealthStatus.Unhealthy))
-            OverallStatus = HealthStatus.Unhealthy;
-        else if (statuses.Contains(HealthStatus.Degraded))
-            OverallStatus = HealthStatus.Degraded;
-        else if (statuses.Contains(HealthStatus.Healthy))
-            OverallStatus = HealthStatus.Healthy;
-        else
-            OverallStatus = HealthStatus.Unknown;
+        var worst = HealthStatus.Unknown;
+        foreach (var m in modules)
+        {
+            var s = m.LastStatus;
+            if (s == HealthStatus.Unhealthy) { worst = HealthStatus.Unhealthy; break; }
+            if (s == HealthStatus.Degraded)  worst = HealthStatus.Degraded;
+            else if (s == HealthStatus.Healthy && worst != HealthStatus.Degraded) worst = HealthStatus.Healthy;
+        }
+        OverallStatus = worst;
     }
 }

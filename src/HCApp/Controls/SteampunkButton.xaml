@@ -16,7 +16,6 @@
             <Label x:Name="ButtonLabel"
                    FontFamily="Courier New"
                    FontSize="18"
-                   FontAttributes="Bold"
                    CharacterSpacing="0.5"
                    TextColor="#FFE8B0"
                    HorizontalTextAlignment="Center"

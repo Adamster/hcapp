@@ -21,20 +21,20 @@ public static class MauiProgram
 			});
 
 		// Services
-		builder.Services.AddHttpClient("HealthCheck");
+		builder.Services.AddHttpClient("HealthCheck", c => c.Timeout = TimeSpan.FromSeconds(15));
 		builder.Services.AddSingleton<IConfigurationStore, ConfigurationStore>();
 		builder.Services.AddSingleton<IHealthCheckService, HealthCheckService>();
 		builder.Services.AddSingleton<INotificationService, NotificationService>();
 		builder.Services.AddSingleton<MonitoringService>();
 
-		// ViewModels
-		builder.Services.AddTransient<DashboardViewModel>();
+		// ViewModels — Dashboard is singleton: one instance for the app lifetime
+		builder.Services.AddSingleton<DashboardViewModel>();
 		builder.Services.AddTransient<EnvironmentEditViewModel>();
 		builder.Services.AddTransient<ModuleDetailViewModel>();
 		builder.Services.AddTransient<SettingsViewModel>();
 
-		// Pages
-		builder.Services.AddTransient<DashboardPage>();
+		// Pages — Dashboard is singleton to avoid re-creation on navigation
+		builder.Services.AddSingleton<DashboardPage>();
 		builder.Services.AddTransient<EnvironmentEditPage>();
 		builder.Services.AddTransient<ModuleDetailPage>();
 		builder.Services.AddTransient<SettingsPage>();

@@ -18,7 +18,7 @@ public partial class SteampunkButton : ContentView
 
     public static readonly BindableProperty VariantProperty =
         BindableProperty.Create(nameof(Variant), typeof(ButtonVariant), typeof(SteampunkButton), ButtonVariant.Secondary,
-            propertyChanged: (b, _, _) => ((SteampunkButton)b).ApplyVariant());
+            propertyChanged: (b, o, n) => { if (o != n) ((SteampunkButton)b).ApplyVariant(); });
 
     public string Text
     {

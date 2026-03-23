@@ -3,14 +3,6 @@ using HCApp.Models;
 
 namespace HCApp.Services;
 
-file static class JsonOptions
-{
-    public static readonly JsonSerializerOptions CaseInsensitive = new()
-    {
-        PropertyNameCaseInsensitive = true
-    };
-}
-
 public sealed class HealthCheckService : IHealthCheckService
 {
     private readonly IHttpClientFactory _httpClientFactory;
@@ -25,7 +17,6 @@ public sealed class HealthCheckService : IHealthCheckService
         try
         {
             using var client = _httpClientFactory.CreateClient("HealthCheck");
-            client.Timeout = TimeSpan.FromSeconds(15);
 
             using var request = new HttpRequestMessage(HttpMethod.Get, url);
             if (headers is not null)
@@ -34,33 +25,23 @@ public sealed class HealthCheckService : IHealthCheckService
                     request.Headers.TryAddWithoutValidation(key, value);
             }
 
-            using var response = await client.SendAsync(request, ct);
-            var body = await response.Content.ReadAsStringAsync(ct);
+            using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false);
 
-            // Try to parse as structured health check response
+            // Try to parse as structured health check response (stream — no intermediate string allocation)
             try
             {
-                var hcResponse = JsonSerializer.Deserialize<HealthCheckResponse>(body, JsonOptions.CaseInsensitive);
+                await using var stream = await response.Content.ReadAsStreamAsync(ct).ConfigureAwait(false);
+                var hcResponse = await JsonSerializer.DeserializeAsync(stream, HCAppJsonContext.Default.HealthCheckResponse, ct).ConfigureAwait(false);
                 if (hcResponse is not null && !string.IsNullOrEmpty(hcResponse.Status))
-                {
-                    var status = ParseStatus(hcResponse.Status);
-                    return new HealthCheckResult(status, hcResponse, null);
-                }
+                    return new HealthCheckResult(ParseStatus(hcResponse.Status), hcResponse, null);
             }
             catch (JsonException)
             {
-                // Not JSON — fall through to simple status check
+                // Not JSON — fall through to HTTP status
             }
 
-            // Simple response: use HTTP status code, and try to parse body as a status string
-            var simpleStatus = response.IsSuccessStatusCode
-                ? ParseStatus(body)
-                : HealthStatus.Unhealthy;
-
-            // If HTTP was successful but body didn't parse to a known status, treat as Healthy
-            if (simpleStatus == HealthStatus.Unknown && response.IsSuccessStatusCode)
-                simpleStatus = HealthStatus.Healthy;
-
+            // Fallback: derive status from HTTP response code
+            var simpleStatus = response.IsSuccessStatusCode ? HealthStatus.Healthy : HealthStatus.Unhealthy;
             return new HealthCheckResult(simpleStatus, null, response.IsSuccessStatusCode ? null : $"HTTP {(int)response.StatusCode}");
         }
         catch (TaskCanceledException) when (!ct.IsCancellationRequested)

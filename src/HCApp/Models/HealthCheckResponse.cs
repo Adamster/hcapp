@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace HCApp.Models;
@@ -29,7 +30,7 @@ public sealed class HealthCheckEntry
     public string? Exception { get; set; }
 
     [JsonPropertyName("data")]
-    public Dictionary<string, object>? Data { get; set; }
+    public Dictionary<string, JsonElement>? Data { get; set; }
 
     [JsonPropertyName("tags")]
     public string[]? Tags { get; set; }

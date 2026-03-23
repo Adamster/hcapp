@@ -7,11 +7,12 @@ using HCApp.Services;
 
 namespace HCApp.ViewModels;
 
-public partial class DashboardViewModel : ObservableObject
+public partial class DashboardViewModel : ObservableObject, IDisposable
 {
     private readonly MonitoringService _monitoringService;
     private readonly IConfigurationStore _configStore;
     private AppConfiguration _config = new();
+    private bool _initialized;
 
     [ObservableProperty]
     private ObservableCollection<MonitorEnvironment> _environments = [];
@@ -40,6 +41,9 @@ public partial class DashboardViewModel : ObservableObject
 
     public async Task InitializeAsync()
     {
+        if (_initialized) return;
+        _initialized = true;
+
         IsLoading = true;
         _config = await _configStore.LoadAsync();
         Environments = new ObservableCollection<MonitorEnvironment>(_config.Environments);
@@ -225,7 +229,7 @@ public partial class DashboardViewModel : ObservableObject
         try
         {
             await using var stream = await result.OpenReadAsync();
-            var imported = await System.Text.Json.JsonSerializer.DeserializeAsync<Models.AppConfiguration>(stream);
+            var imported = await System.Text.Json.JsonSerializer.DeserializeAsync(stream, HCAppJsonContext.Default.AppConfiguration);
             if (imported is null) return;
 
             _config = imported;
@@ -247,8 +251,9 @@ public partial class DashboardViewModel : ObservableObject
     [RelayCommand]
     private async Task ExportConfigAsync()
     {
-        var json = JsonSerializer.Serialize(_config, new JsonSerializerOptions { WriteIndented = true });
-        using var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(json));
+        using var stream = new MemoryStream();
+        await JsonSerializer.SerializeAsync(stream, _config, HCAppJsonContext.Default.AppConfiguration);
+        stream.Position = 0;
 
         var result = await CommunityToolkit.Maui.Storage.FileSaver.Default.SaveAsync(
             "hcapp-config.json", stream, CancellationToken.None);
@@ -335,5 +340,10 @@ public partial class DashboardViewModel : ObservableObject
                     envStatus.Recompute(env.GetEffectiveModules());
             }
         });
+    }
+
+    public void Dispose()
+    {
+        _monitoringService.ModuleStatusUpdated -= OnModuleStatusUpdated;
     }
 }
