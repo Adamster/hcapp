@@ -23,6 +23,9 @@ public partial class DashboardViewModel : ObservableObject
     private ObservableCollection<ModuleStatusViewModel> _modules = [];
 
     [ObservableProperty]
+    private ObservableCollection<EnvironmentStatusViewModel> _environmentStatuses = [];
+
+    [ObservableProperty]
     private bool _isLoading;
 
     [ObservableProperty]
@@ -44,6 +47,8 @@ public partial class DashboardViewModel : ObservableObject
         if (Environments.Count > 0)
             SelectedEnvironment = Environments[0];
 
+        RebuildEnvironmentStatuses();
+
         _monitoringService.NotificationsEnabled = _config.Settings.NotificationsEnabled;
 
         IsLoading = false;
@@ -51,6 +56,9 @@ public partial class DashboardViewModel : ObservableObject
 
     partial void OnSelectedEnvironmentChanged(MonitorEnvironment? value)
     {
+        foreach (var s in EnvironmentStatuses)
+            s.IsSelected = s.EnvironmentId == value?.Id;
+
         RefreshModuleList();
         if (value is not null)
             _monitoringService.StartMonitoring(value);
@@ -67,6 +75,7 @@ public partial class DashboardViewModel : ObservableObject
 
         _config.Environments.Add(env);
         Environments.Add(env);
+        RebuildEnvironmentStatuses();
         await _configStore.SaveAsync(_config);
 
         SelectedEnvironment = env;
@@ -106,6 +115,7 @@ public partial class DashboardViewModel : ObservableObject
 
         _config.Environments.Add(clone);
         Environments.Add(clone);
+        RebuildEnvironmentStatuses();
         await _configStore.SaveAsync(_config);
 
         SelectedEnvironment = clone;
@@ -130,6 +140,7 @@ public partial class DashboardViewModel : ObservableObject
         _monitoringService.StopMonitoring(SelectedEnvironment.Id);
         _config.Environments.Remove(SelectedEnvironment);
         Environments.Remove(SelectedEnvironment);
+        RebuildEnvironmentStatuses();
         await _configStore.SaveAsync(_config);
 
         SelectedEnvironment = Environments.FirstOrDefault();
@@ -222,6 +233,7 @@ public partial class DashboardViewModel : ObservableObject
 
             _monitoringService.StopAll();
             Environments = new ObservableCollection<MonitorEnvironment>(_config.Environments);
+            RebuildEnvironmentStatuses();
             SelectedEnvironment = Environments.FirstOrDefault();
 
             await Shell.Current.DisplayAlertAsync("Import", "Configuration imported successfully.", "OK");
@@ -245,6 +257,30 @@ public partial class DashboardViewModel : ObservableObject
         {
             await Shell.Current.DisplayAlertAsync("Export", "Configuration exported successfully.", "OK");
         }
+    }
+
+    [RelayCommand]
+    private void SelectEnvironment(EnvironmentStatusViewModel envStatus)
+    {
+        var env = _config.Environments.FirstOrDefault(e => e.Id == envStatus.EnvironmentId);
+        if (env is not null)
+            SelectedEnvironment = env;
+    }
+
+    private void RebuildEnvironmentStatuses()
+    {
+        EnvironmentStatuses = new ObservableCollection<EnvironmentStatusViewModel>(
+            _config.Environments.Select(env =>
+            {
+                var vm = new EnvironmentStatusViewModel
+                {
+                    EnvironmentId = env.Id,
+                    Name = env.Name.Length > 8 ? env.Name[..8].ToUpperInvariant() : env.Name.ToUpperInvariant(),
+                    IsSelected = env.Id == SelectedEnvironment?.Id
+                };
+                vm.Recompute(env.GetEffectiveModules());
+                return vm;
+            }));
     }
 
     public void StartAllMonitoring()
@@ -282,14 +318,21 @@ public partial class DashboardViewModel : ObservableObject
 
     private void OnModuleStatusUpdated(string environmentId, MonitorModule module)
     {
-        if (SelectedEnvironment?.Id != environmentId) return;
-
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            var existing = Modules.FirstOrDefault(m => m.ModuleId == module.Id);
-            if (existing is not null)
+            if (SelectedEnvironment?.Id == environmentId)
             {
-                existing.UpdateFrom(module, SelectedEnvironment?.BaseUrl);
+                var existing = Modules.FirstOrDefault(m => m.ModuleId == module.Id);
+                if (existing is not null)
+                    existing.UpdateFrom(module, SelectedEnvironment?.BaseUrl);
+            }
+
+            var envStatus = EnvironmentStatuses.FirstOrDefault(s => s.EnvironmentId == environmentId);
+            if (envStatus is not null)
+            {
+                var env = _config.Environments.FirstOrDefault(e => e.Id == environmentId);
+                if (env is not null)
+                    envStatus.Recompute(env.GetEffectiveModules());
             }
         });
     }

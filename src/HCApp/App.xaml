@@ -12,6 +12,8 @@
             <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
             <converters:StatusToColorConverter x:Key="StatusToColor" />
             <converters:StatusToBackgroundConverter x:Key="StatusToBackground" />
+            <converters:StatusToGlowConverter x:Key="StatusToGlow" />
+            <converters:BoolToOpacityConverter x:Key="LampOpacity" TrueOpacity="1.0" FalseOpacity="0.4" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

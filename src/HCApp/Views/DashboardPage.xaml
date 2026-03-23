@@ -7,7 +7,7 @@
              x:DataType="vm:DashboardViewModel"
              Title="Health Monitor">
 
-    <Grid RowDefinitions="Auto,Auto,*">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
 
         <!-- Toolbar -->
         <Border Grid.Row="0" Style="{StaticResource ToolbarBorder}">
@@ -96,8 +96,108 @@
                  HeightRequest="1"
                  BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBorderLight}, Dark={StaticResource SurfaceBorderDark}}" />
 
+        <!-- Environment status bar (retro analog panel) -->
+        <Grid Grid.Row="2" RowDefinitions="2,1,*,1" BackgroundColor="#1A2030">
+            <!-- Ridge top highlight -->
+            <BoxView Grid.Row="0" BackgroundColor="#2A3A55" HeightRequest="2" VerticalOptions="Fill" />
+            <!-- Ridge shadow undercut -->
+            <BoxView Grid.Row="1" BackgroundColor="#0A0F18" HeightRequest="1" VerticalOptions="Fill" />
+
+            <!-- Lamps scroll area -->
+            <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="16,8">
+                <HorizontalStackLayout Spacing="24"
+                                       VerticalOptions="Center"
+                                       BindableLayout.ItemsSource="{Binding EnvironmentStatuses}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:EnvironmentStatusViewModel">
+                            <VerticalStackLayout Spacing="4"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+                                                MinimumWidthRequest="52"
+                                                Opacity="{Binding IsSelected, Converter={StaticResource LampOpacity}}">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}}, Path=SelectEnvironmentCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </VerticalStackLayout.GestureRecognizers>
+
+                                <!-- Lamp assembly: selection ring + socket + bulb -->
+                                <Grid HorizontalOptions="Center"
+                                      WidthRequest="28"
+                                      HeightRequest="28">
+
+                                    <!-- Selection ring (only visible when selected) -->
+                                    <Ellipse WidthRequest="28" HeightRequest="28"
+                                             HorizontalOptions="Center"
+                                             VerticalOptions="Center"
+                                             Fill="Transparent"
+                                             Stroke="{Binding OverallStatus, Converter={StaticResource StatusToColor}}"
+                                             StrokeThickness="1.5"
+                                             Opacity="0.65"
+                                             IsVisible="{Binding IsSelected}" />
+
+                                    <!-- Socket bezel (dark ring) -->
+                                    <Ellipse WidthRequest="22" HeightRequest="22"
+                                             HorizontalOptions="Center"
+                                             VerticalOptions="Center"
+                                             Fill="#0D1018" />
+
+                                    <!-- Bulb fill with glow shadow -->
+                                    <Border WidthRequest="18"
+                                            HeightRequest="18"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            BackgroundColor="{Binding OverallStatus, Converter={StaticResource StatusToColor}}"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 9"
+                                            Shadow="{Binding OverallStatus, Converter={StaticResource StatusToGlow}}">
+                                        <!-- Glass sheen highlight -->
+                                        <Grid>
+                                            <Ellipse WidthRequest="6"
+                                                     HeightRequest="6"
+                                                     Fill="White"
+                                                     Opacity="0.18"
+                                                     HorizontalOptions="Start"
+                                                     VerticalOptions="Start"
+                                                     Margin="2,2,0,0" />
+                                        </Grid>
+                                    </Border>
+
+                                </Grid>
+
+                                <!-- Hardware label -->
+                                <Label Text="{Binding Name}"
+                                       FontSize="9"
+                                       FontFamily="Courier New"
+                                       CharacterSpacing="0.8"
+                                       HorizontalTextAlignment="Center"
+                                       HorizontalOptions="Center"
+                                       TextColor="#8090B0">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="TextColor" Value="#C8D8F0" />
+                                            <Setter Property="FontAttributes" Value="Bold" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+            </ScrollView>
+
+            <!-- Bottom seam -->
+            <BoxView Grid.Row="3" BackgroundColor="#0A0F18" HeightRequest="1" VerticalOptions="Fill" />
+        </Grid>
+
+        <!-- Status bar bottom separator -->
+        <BoxView Grid.Row="3"
+                 HeightRequest="1"
+                 BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBorderLight}, Dark={StaticResource SurfaceBorderDark}}" />
+
         <!-- Content area -->
-        <Grid Grid.Row="2" RowDefinitions="*">
+        <Grid Grid.Row="4" RowDefinitions="*">
 
             <!-- Module list -->
             <CollectionView ItemsSource="{Binding Modules}"
