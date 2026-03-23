@@ -11,10 +11,14 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
-		<ApplicationTitle>HCApp</ApplicationTitle>
-		<ApplicationId>com.companyname.hcapp</ApplicationId>
+		<AssemblyName>HealthMonitor</AssemblyName>
+		<ApplicationTitle>Health Monitor</ApplicationTitle>
+		<ApplicationId>com.notlazy.healthmonitor</ApplicationId>
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
+		<Company>NotLazy</Company>
+		<Product>Health Monitor</Product>
+		<Copyright>Copyright © 2026 NotLazy</Copyright>
 
 		<WindowsPackageType>None</WindowsPackageType>
 
