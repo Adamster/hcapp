@@ -24,6 +24,9 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty]
     private bool _isLoading;
 
+    [ObservableProperty]
+    private bool _isRefreshing;
+
     public DashboardViewModel(MonitoringService monitoringService, IConfigurationStore configStore)
     {
         _monitoringService = monitoringService;
@@ -135,6 +138,24 @@ public partial class DashboardViewModel : ObservableObject
 
         RefreshModuleList();
         _monitoringService.StartMonitoring(SelectedEnvironment);
+    }
+
+    [RelayCommand]
+    private async Task RefreshAllAsync()
+    {
+        if (SelectedEnvironment is null) return;
+        IsRefreshing = true;
+        await _monitoringService.CheckAllNowAsync(SelectedEnvironment);
+        IsRefreshing = false;
+    }
+
+    [RelayCommand]
+    private async Task RefreshModuleAsync(ModuleStatusViewModel moduleVm)
+    {
+        if (SelectedEnvironment is null) return;
+        var module = SelectedEnvironment.GetEffectiveModules().FirstOrDefault(m => m.Id == moduleVm.ModuleId);
+        if (module is null) return;
+        await _monitoringService.CheckModuleNowAsync(SelectedEnvironment, module);
     }
 
     public void StartAllMonitoring()

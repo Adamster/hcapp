@@ -11,7 +11,7 @@
 
         <!-- Toolbar -->
         <Border Grid.Row="0" Style="{StaticResource ToolbarBorder}">
-            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto" ColumnSpacing="8" RowDefinitions="Auto">
+            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto" ColumnSpacing="8" RowDefinitions="Auto">
 
                 <!-- Environment picker -->
                 <Border Grid.Column="0" Style="{StaticResource PickerFieldBorder}">
@@ -46,8 +46,15 @@
                 <!-- Spacer -->
                 <BoxView Grid.Column="4" BackgroundColor="Transparent" />
 
-                <!-- Add module -->
+                <!-- Refresh all -->
                 <Button Grid.Column="5"
+                        Text="Refresh"
+                        Style="{StaticResource SecondaryButton}"
+                        Command="{Binding RefreshAllCommand}"
+                        ToolTipProperties.Text="Check all modules now" />
+
+                <!-- Add module -->
+                <Button Grid.Column="6"
                         Text="+ Add Module"
                         Style="{StaticResource PrimaryButton}"
                         Command="{Binding AddModuleCommand}" />
@@ -95,7 +102,7 @@
                             StrokeThickness="0"
                             BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceSecondaryLight}, Dark={StaticResource SurfaceSecondaryDark}}"
                             Padding="20,8">
-                        <Grid ColumnDefinitions="24,*,140,140,40" ColumnSpacing="12">
+                        <Grid ColumnDefinitions="24,*,140,140,48" ColumnSpacing="12">
                             <Label Grid.Column="1"
                                    Text="MODULE"
                                    Style="{StaticResource CaptionLabel}"
@@ -137,7 +144,7 @@
                                     </DataTrigger>
                                 </Border.Triggers>
 
-                                <Grid ColumnDefinitions="24,*,140,140,40" ColumnSpacing="12" Padding="0,12">
+                                <Grid ColumnDefinitions="24,*,140,140,48" ColumnSpacing="12" Padding="0,12">
 
                                     <!-- Status dot -->
                                     <Ellipse Grid.Column="0"
@@ -179,13 +186,19 @@
                                            HorizontalTextAlignment="End"
                                            VerticalOptions="Center" />
 
-                                    <!-- Chevron -->
-                                    <Label Grid.Column="4"
-                                           Text="›"
-                                           Style="{StaticResource SecondaryLabel}"
-                                           FontSize="18"
-                                           HorizontalTextAlignment="End"
-                                           VerticalOptions="Center" />
+                                    <!-- Per-module refresh -->
+                                    <Button Grid.Column="4"
+                                            Text="↻"
+                                            FontSize="16"
+                                            Padding="4"
+                                            MinimumWidthRequest="36"
+                                            MinimumHeightRequest="36"
+                                            Style="{StaticResource SecondaryButton}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}}, Path=RefreshModuleCommand}"
+                                            CommandParameter="{Binding .}"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"
+                                            ToolTipProperties.Text="Check now" />
                                 </Grid>
                             </Border>
 

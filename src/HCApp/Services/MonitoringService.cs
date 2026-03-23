@@ -49,9 +49,16 @@ public sealed class MonitoringService : IDisposable
 
     public async Task CheckModuleNowAsync(MonitorEnvironment environment, MonitorModule module)
     {
-        var url = BuildUrl(environment.BaseUrl, module.HealthCheckPath);
+        var url = string.IsNullOrEmpty(module.HealthCheckPath)
+            ? environment.BaseUrl.TrimEnd('/')
+            : BuildUrl(environment.BaseUrl, module.HealthCheckPath);
         var result = await _healthCheckService.CheckAsync(url, environment.Headers);
         ApplyResult(environment, module, result);
+    }
+
+    public async Task CheckAllNowAsync(MonitorEnvironment environment)
+    {
+        await PollAllModulesAsync(environment, CancellationToken.None);
     }
 
     private async Task PollLoopAsync(MonitorEnvironment environment, CancellationToken ct)
