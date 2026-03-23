@@ -47,11 +47,19 @@ public sealed class NotificationService : INotificationService
 #if WINDOWS
     private static void SendWindowsNotification(string title, string body)
     {
-        var builder = new Microsoft.Windows.AppNotifications.Builder.AppNotificationBuilder()
-            .AddText(title)
-            .AddText(body);
+        try
+        {
+            var builder = new Microsoft.Windows.AppNotifications.Builder.AppNotificationBuilder()
+                .AddText(title)
+                .AddText(body);
 
-        Microsoft.Windows.AppNotifications.AppNotificationManager.Default.Show(builder.BuildNotification());
+            Microsoft.Windows.AppNotifications.AppNotificationManager.Default.Show(builder.BuildNotification());
+        }
+        catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException or InvalidOperationException)
+        {
+            // Notification infrastructure unavailable (e.g. running unpackaged without identity)
+            System.Diagnostics.Debug.WriteLine($"[Notification] Failed to show toast: {ex.Message}");
+        }
     }
 #endif
 }

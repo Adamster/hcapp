@@ -63,12 +63,9 @@ public sealed class MonitoringService : IDisposable
         await PollAllModulesAsync(environment, CancellationToken.None).ConfigureAwait(false);
     }
 
-    private async Task PollLoopAsync(MonitorEnvironment environment, CancellationToken ct)
+private async Task PollLoopAsync(MonitorEnvironment environment, CancellationToken ct)
     {
         using var timer = new PeriodicTimer(TimeSpan.FromSeconds(environment.PollingIntervalSeconds));
-
-        // Run immediately on start
-        await PollAllModulesAsync(environment, ct).ConfigureAwait(false);
 
         while (await timer.WaitForNextTickAsync(ct).ConfigureAwait(false))
         {

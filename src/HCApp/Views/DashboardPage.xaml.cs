@@ -12,11 +12,16 @@ public partial class DashboardPage : ContentPage
         BindingContext = _viewModel = viewModel;
     }
 
+    private bool _firstAppearance = true;
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        bool isFirst = _firstAppearance;
+        _firstAppearance = false;
+
         await _viewModel.InitializeAsync();
-        _viewModel.StartAllMonitoring();
+        _viewModel.StartAllMonitoring(pollImmediately: isFirst);
     }
 
     protected override void OnDisappearing()

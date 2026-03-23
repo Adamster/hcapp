@@ -64,8 +64,6 @@ public partial class DashboardViewModel : ObservableObject, IDisposable
             s.IsSelected = s.EnvironmentId == value?.Id;
 
         RefreshModuleList();
-        if (value is not null)
-            _monitoringService.StartMonitoring(value);
     }
 
     [RelayCommand]
@@ -288,10 +286,16 @@ public partial class DashboardViewModel : ObservableObject, IDisposable
             }));
     }
 
-    public void StartAllMonitoring()
+    public void StartAllMonitoring(bool pollImmediately = false)
     {
         foreach (var env in _config.Environments)
             _monitoringService.StartMonitoring(env);
+
+        if (pollImmediately)
+        {
+            var envs = _config.Environments.ToList();
+            _ = Task.WhenAll(envs.Select(e => _monitoringService.CheckAllNowAsync(e)));
+        }
     }
 
     public void StopAllMonitoring()
