@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HCApp.Models;
@@ -84,6 +85,35 @@ public partial class DashboardViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private async Task CloneEnvironmentAsync()
+    {
+        if (SelectedEnvironment is null) return;
+
+        var clone = new MonitorEnvironment
+        {
+            Name = $"{SelectedEnvironment.Name} (Copy)",
+            BaseUrl = SelectedEnvironment.BaseUrl,
+            PollingIntervalSeconds = SelectedEnvironment.PollingIntervalSeconds,
+            Headers = new Dictionary<string, string>(SelectedEnvironment.Headers),
+            Modules = SelectedEnvironment.Modules.Select(m => new MonitorModule
+            {
+                Name = m.Name,
+                HealthCheckPath = m.HealthCheckPath
+            }).ToList()
+        };
+
+        _config.Environments.Add(clone);
+        Environments.Add(clone);
+        await _configStore.SaveAsync(_config);
+
+        SelectedEnvironment = clone;
+        await Shell.Current.GoToAsync("environment-edit", new Dictionary<string, object>
+        {
+            ["Environment"] = clone
+        });
+    }
+
+    [RelayCommand]
     private async Task DeleteEnvironmentAsync()
     {
         if (SelectedEnvironment is null) return;
@@ -156,6 +186,21 @@ public partial class DashboardViewModel : ObservableObject
         var module = SelectedEnvironment.GetEffectiveModules().FirstOrDefault(m => m.Id == moduleVm.ModuleId);
         if (module is null) return;
         await _monitoringService.CheckModuleNowAsync(SelectedEnvironment, module);
+    }
+
+    [RelayCommand]
+    private async Task ExportConfigAsync()
+    {
+        var json = JsonSerializer.Serialize(_config, new JsonSerializerOptions { WriteIndented = true });
+        using var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(json));
+
+        var result = await CommunityToolkit.Maui.Storage.FileSaver.Default.SaveAsync(
+            "hcapp-config.json", stream, CancellationToken.None);
+
+        if (result.IsSuccessful)
+        {
+            await Shell.Current.DisplayAlertAsync("Export", "Configuration exported successfully.", "OK");
+        }
     }
 
     public void StartAllMonitoring()

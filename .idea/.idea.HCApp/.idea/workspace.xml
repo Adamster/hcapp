@@ -9,13 +9,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e42f712-31c8-4973-8929-fdf566b6585a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HCApp/Models/MonitorEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Models/MonitorEnvironment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HCApp/Models/MonitorModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Models/MonitorModule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HCApp/Services/MonitoringService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Services/MonitoringService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.HCApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HCApp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HCApp/ViewModels/DashboardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/ViewModels/DashboardViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HCApp/ViewModels/EnvironmentEditViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/ViewModels/EnvironmentEditViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HCApp/ViewModels/ModuleStatusViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/ViewModels/ModuleStatusViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HCApp/Views/DashboardPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Views/DashboardPage.xaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +45,9 @@
     <urls />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="AISelfReview" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -85,7 +84,7 @@
     <option name="spentUsd" value="0.00683225" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="9" />
+    <option name="suspendCountdown" value="8" />
   </component>
   <component name="RunManager" selected="macOS.HCApp">
     <configuration name="HCApp" type="XamarinIOSProject" factoryName="Xamarin.iOS">
@@ -114,7 +113,7 @@
       <option name="presentableId" value="Default" />
       <updated>1774256436700</updated>
       <workItem from="1774256439174" duration="1095000" />
-      <workItem from="1774257555576" duration="657000" />
+      <workItem from="1774257555576" duration="1863000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial cross-platform application setup with .NET MAUI">
       <option name="closed" value="true" />
@@ -124,7 +123,31 @@
       <option name="project" value="LOCAL" />
       <updated>1774257571546</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add health check path support for modules and integrate full URL display in UI">
+      <option name="closed" value="true" />
+      <created>1774258528921</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1774258528921</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add &quot;Refresh All&quot; and per-module refresh functionality to Dashboard">
+      <option name="closed" value="true" />
+      <created>1774258795395</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1774258795395</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add exception property to HealthCheckResponse and enhance JSON handling in HealthCheckService">
+      <option name="closed" value="true" />
+      <created>1774259088036</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1774259088036</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,7 +158,10 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Add initial cross-platform application setup with .NET MAUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add initial cross-platform application setup with .NET MAUI" />
+    <MESSAGE value="Add health check path support for modules and integrate full URL display in UI" />
+    <MESSAGE value="Add &quot;Refresh All&quot; and per-module refresh functionality to Dashboard" />
+    <MESSAGE value="Add exception property to HealthCheckResponse and enhance JSON handling in HealthCheckService" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add exception property to HealthCheckResponse and enhance JSON handling in HealthCheckService" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

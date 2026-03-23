@@ -11,7 +11,7 @@
 
         <!-- Toolbar -->
         <Border Grid.Row="0" Style="{StaticResource ToolbarBorder}">
-            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto" ColumnSpacing="8" RowDefinitions="Auto">
+            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto" ColumnSpacing="8" RowDefinitions="Auto">
 
                 <!-- Environment picker -->
                 <Border Grid.Column="0" Style="{StaticResource PickerFieldBorder}">
@@ -36,25 +36,39 @@
                         Command="{Binding EditEnvironmentCommand}"
                         ToolTipProperties.Text="Edit selected environment" />
 
-                <!-- Delete environment -->
+                <!-- Clone environment -->
                 <Button Grid.Column="3"
+                        Text="Clone"
+                        Style="{StaticResource SecondaryButton}"
+                        Command="{Binding CloneEnvironmentCommand}"
+                        ToolTipProperties.Text="Clone selected environment" />
+
+                <!-- Delete environment -->
+                <Button Grid.Column="4"
                         Text="Delete"
                         Style="{StaticResource DangerButton}"
                         Command="{Binding DeleteEnvironmentCommand}"
                         ToolTipProperties.Text="Delete selected environment" />
 
                 <!-- Spacer -->
-                <BoxView Grid.Column="4" BackgroundColor="Transparent" />
+                <BoxView Grid.Column="5" BackgroundColor="Transparent" />
+
+                <!-- Export config -->
+                <Button Grid.Column="6"
+                        Text="Export"
+                        Style="{StaticResource SecondaryButton}"
+                        Command="{Binding ExportConfigCommand}"
+                        ToolTipProperties.Text="Export configuration to JSON file" />
 
                 <!-- Refresh all -->
-                <Button Grid.Column="5"
+                <Button Grid.Column="7"
                         Text="Refresh"
                         Style="{StaticResource SecondaryButton}"
                         Command="{Binding RefreshAllCommand}"
                         ToolTipProperties.Text="Check all modules now" />
 
                 <!-- Add module -->
-                <Button Grid.Column="6"
+                <Button Grid.Column="8"
                         Text="+ Add Module"
                         Style="{StaticResource PrimaryButton}"
                         Command="{Binding AddModuleCommand}" />

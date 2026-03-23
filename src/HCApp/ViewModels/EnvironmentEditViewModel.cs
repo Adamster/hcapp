@@ -100,6 +100,29 @@ public partial class EnvironmentEditViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private async Task EditModuleAsync(MonitorModule module)
+    {
+        var newName = await Shell.Current.DisplayPromptAsync(
+            "Edit Module Name", "Module name:", initialValue: module.Name);
+
+        if (newName is null) return; // cancelled
+
+        var newPath = await Shell.Current.DisplayPromptAsync(
+            "Edit Health Check Path", "Health check endpoint path:", initialValue: module.HealthCheckPath);
+
+        if (newPath is null) return; // cancelled
+
+        var index = Modules.IndexOf(module);
+        if (index < 0) return;
+
+        module.Name = newName.Trim();
+        module.HealthCheckPath = newPath.Trim();
+
+        // Replace to trigger UI update
+        Modules[index] = module;
+    }
+
+    [RelayCommand]
     private void RemoveModule(MonitorModule module)
     {
         Modules.Remove(module);
