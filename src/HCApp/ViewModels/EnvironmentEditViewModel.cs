@@ -87,10 +87,16 @@ public partial class EnvironmentEditViewModel : ObservableObject
     private async Task AddModuleAsync()
     {
         var name = await Shell.Current.DisplayPromptAsync(
-            "Add Module", "Enter the module path (e.g. 'users-service'):");
+            "Add Module", "Enter the module name (e.g. 'Users Service'):");
 
         if (string.IsNullOrWhiteSpace(name)) return;
-        Modules.Add(new MonitorModule { Name = name.Trim() });
+
+        var path = await Shell.Current.DisplayPromptAsync(
+            "Health Check Path", "Enter the health check endpoint path (e.g. 'health/users-service'):");
+
+        if (string.IsNullOrWhiteSpace(path)) return;
+
+        Modules.Add(new MonitorModule { Name = name.Trim(), HealthCheckPath = path.Trim() });
     }
 
     [RelayCommand]

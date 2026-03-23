@@ -29,7 +29,8 @@ public sealed class MonitorEnvironment
     public MonitorModule BaseUrlModule => _baseUrlModule ??= new MonitorModule
     {
         Id = $"{Id}_base",
-        Name = string.Empty
+        Name = string.Empty,
+        HealthCheckPath = string.Empty
     };
 
     public List<MonitorModule> GetEffectiveModules()

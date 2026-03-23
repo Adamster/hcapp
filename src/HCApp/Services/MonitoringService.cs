@@ -49,7 +49,7 @@ public sealed class MonitoringService : IDisposable
 
     public async Task CheckModuleNowAsync(MonitorEnvironment environment, MonitorModule module)
     {
-        var url = BuildUrl(environment.BaseUrl, module.Name);
+        var url = BuildUrl(environment.BaseUrl, module.HealthCheckPath);
         var result = await _healthCheckService.CheckAsync(url, environment.Headers);
         ApplyResult(environment, module, result);
     }
@@ -72,9 +72,9 @@ public sealed class MonitoringService : IDisposable
         var modules = environment.GetEffectiveModules();
         var tasks = modules.Select(async module =>
         {
-            var url = module.Name == string.Empty
+            var url = string.IsNullOrEmpty(module.HealthCheckPath)
                 ? environment.BaseUrl.TrimEnd('/')
-                : BuildUrl(environment.BaseUrl, module.Name);
+                : BuildUrl(environment.BaseUrl, module.HealthCheckPath);
             var result = await _healthCheckService.CheckAsync(url, environment.Headers, ct);
             ApplyResult(environment, module, result);
         });

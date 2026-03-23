@@ -120,11 +120,16 @@ public partial class DashboardViewModel : ObservableObject
         if (SelectedEnvironment is null) return;
 
         var name = await Shell.Current.DisplayPromptAsync(
-            "Add Module", "Enter the module path (e.g. 'users-service'):");
+            "Add Module", "Enter the module name (e.g. 'Users Service'):");
 
         if (string.IsNullOrWhiteSpace(name)) return;
 
-        var module = new MonitorModule { Name = name.Trim() };
+        var path = await Shell.Current.DisplayPromptAsync(
+            "Health Check Path", "Enter the health check endpoint path (e.g. 'health/users-service'):");
+
+        if (string.IsNullOrWhiteSpace(path)) return;
+
+        var module = new MonitorModule { Name = name.Trim(), HealthCheckPath = path.Trim() };
         SelectedEnvironment.Modules.Add(module);
         await _configStore.SaveAsync(_config);
 
@@ -160,7 +165,7 @@ public partial class DashboardViewModel : ObservableObject
             SelectedEnvironment.GetEffectiveModules().Select(m =>
             {
                 var vm = new ModuleStatusViewModel();
-                vm.UpdateFrom(m);
+                vm.UpdateFrom(m, SelectedEnvironment.BaseUrl);
                 return vm;
             }));
     }
@@ -174,7 +179,7 @@ public partial class DashboardViewModel : ObservableObject
             var existing = Modules.FirstOrDefault(m => m.ModuleId == module.Id);
             if (existing is not null)
             {
-                existing.UpdateFrom(module);
+                existing.UpdateFrom(module, SelectedEnvironment?.BaseUrl);
             }
         });
     }

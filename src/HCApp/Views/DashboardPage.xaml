@@ -146,11 +146,15 @@
                                              VerticalOptions="Center"
                                              HorizontalOptions="Center" />
 
-                                    <!-- Module name + error badge -->
+                                    <!-- Module name + URL + error badge -->
                                     <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
                                         <Label Text="{Binding Name}"
                                                Style="{StaticResource BodyLargeLabel}"
                                                FontFamily="OpenSansSemiBold"
+                                               HorizontalOptions="Fill" />
+                                        <Label Text="{Binding FullUrl}"
+                                               Style="{StaticResource CaptionLabel}"
+                                               LineBreakMode="TailTruncation"
                                                HorizontalOptions="Fill" />
                                         <Label Text="{Binding Error}"
                                                Style="{StaticResource CaptionLabel}"

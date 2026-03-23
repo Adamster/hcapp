@@ -34,7 +34,7 @@
                         <Label Text="Base URL" Style="{StaticResource FieldLabelStyle}" />
                         <Border Style="{StaticResource InputFieldBorder}">
                             <Entry Text="{Binding BaseUrl}"
-                                   Placeholder="https://api.example.com/health"
+                                   Placeholder="https://api.example.com"
                                    Keyboard="Url"
                                    ReturnType="Next" />
                         </Border>
@@ -85,7 +85,7 @@
                                 VerticalOptions="Center" />
                     </Grid>
 
-                    <Label Text="Modules define the health check paths appended to the base URL."
+                    <Label Text="Each module has a name and a health check endpoint path relative to the base URL."
                            Style="{StaticResource CaptionLabel}"
                            LineBreakMode="WordWrap"
                            Margin="0,-4,0,0" />
@@ -111,6 +111,10 @@
                                             <Label Text="{Binding Name}"
                                                    Style="{StaticResource BodyLargeLabel}"
                                                    FontFamily="OpenSansSemiBold"
+                                                   HorizontalOptions="Fill" />
+                                            <Label Text="{Binding HealthCheckPath}"
+                                                   Style="{StaticResource CaptionLabel}"
+                                                   LineBreakMode="TailTruncation"
                                                    HorizontalOptions="Fill" />
                                         </VerticalStackLayout>
                                         <Button Grid.Column="1"

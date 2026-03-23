@@ -26,7 +26,10 @@ public partial class ModuleStatusViewModel : ObservableObject
     [ObservableProperty]
     private HealthCheckResponse? _lastResponse;
 
-    public void UpdateFrom(MonitorModule module)
+    [ObservableProperty]
+    private string _fullUrl = string.Empty;
+
+    public void UpdateFrom(MonitorModule module, string? baseUrl = null)
     {
         ModuleId = module.Id;
         Name = string.IsNullOrEmpty(module.Name) ? "(Base URL)" : module.Name;
@@ -35,5 +38,12 @@ public partial class ModuleStatusViewModel : ObservableObject
         LastChecked = module.LastChecked?.ToString("HH:mm:ss") ?? "Never";
         Error = module.LastError;
         LastResponse = module.LastResponse;
+
+        if (baseUrl is not null)
+        {
+            FullUrl = string.IsNullOrEmpty(module.HealthCheckPath)
+                ? baseUrl.TrimEnd('/')
+                : $"{baseUrl.TrimEnd('/')}/{module.HealthCheckPath.TrimStart('/')}";
+        }
     }
 }

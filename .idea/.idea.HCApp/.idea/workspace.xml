@@ -8,7 +8,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e42f712-31c8-4973-8929-fdf566b6585a" name="Changes" comment="added git ignore" />
+    <list default="true" id="8e42f712-31c8-4973-8929-fdf566b6585a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HCApp/Models/MonitorEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Models/MonitorEnvironment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HCApp/Models/MonitorModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Models/MonitorModule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HCApp/Services/MonitoringService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Services/MonitoringService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HCApp/ViewModels/DashboardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/ViewModels/DashboardViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HCApp/ViewModels/EnvironmentEditViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/ViewModels/EnvironmentEditViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HCApp/ViewModels/ModuleStatusViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/ViewModels/ModuleStatusViewModel.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,7 +26,7 @@
     <option name="firstShow" value="false" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="2" />
+    <option name="cachedIndexableFilesCount" value="21" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -49,28 +57,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Device#class com.jetbrains.rider.run.multiPlatform.ios.devices.IOSSimulatorKind#com.jetbrains.rider.run.multiPlatform.ios.devices.IOSDevicesProvider#iOS: HCApp&quot;: &quot;iPad (A16) (iOS 26.0)&quot;,
-    &quot;DeviceKind#com.jetbrains.rider.run.multiPlatform.ios.devices.IOSDevicesProvider&quot;: &quot;Simulator&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;macOS.HCApp.executor&quot;: &quot;Run&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Device#class com.jetbrains.rider.run.multiPlatform.ios.devices.IOSSimulatorKind#com.jetbrains.rider.run.multiPlatform.ios.devices.IOSDevicesProvider#iOS: HCApp": "iPad (A16) (iOS 26.0)",
+    "DeviceKind#com.jetbrains.rider.run.multiPlatform.ios.devices.IOSDevicesProvider": "Simulator",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "macOS.HCApp.executor": "Run",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecapSpentCounter">
+    <option name="endsOfQuotaMs" value="1774785660479" />
+    <option name="spentUsd" value="0.00683225" />
+  </component>
+  <component name="RecapUselessUpdatesCounter">
+    <option name="suspendCountdown" value="9" />
+  </component>
   <component name="RunManager" selected="macOS.HCApp">
     <configuration name="HCApp" type="XamarinIOSProject" factoryName="Xamarin.iOS">
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/src/HCApp/HCApp.csproj" />
@@ -98,7 +114,17 @@
       <option name="presentableId" value="Default" />
       <updated>1774256436700</updated>
       <workItem from="1774256439174" duration="1095000" />
+      <workItem from="1774257555576" duration="657000" />
     </task>
+    <task id="LOCAL-00001" summary="Add initial cross-platform application setup with .NET MAUI">
+      <option name="closed" value="true" />
+      <created>1774257571546</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1774257571546</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -108,6 +134,8 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Add initial cross-platform application setup with .NET MAUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add initial cross-platform application setup with .NET MAUI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

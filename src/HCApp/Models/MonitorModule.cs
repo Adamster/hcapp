@@ -10,6 +10,9 @@ public sealed class MonitorModule
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;
 
+    [JsonPropertyName("healthCheckPath")]
+    public string HealthCheckPath { get; set; } = string.Empty;
+
     [JsonIgnore]
     public HealthStatus LastStatus { get; set; } = HealthStatus.Unknown;
 
