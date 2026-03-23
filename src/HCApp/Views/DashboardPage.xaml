@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HCApp.ViewModels"
              xmlns:models="clr-namespace:HCApp.Models"
+             xmlns:controls="clr-namespace:HCApp.Controls"
              x:Class="HCApp.Views.DashboardPage"
              x:DataType="vm:DashboardViewModel"
              Title="Health Monitor">
@@ -11,42 +12,40 @@
 
         <!-- Toolbar -->
         <Border Grid.Row="0" Style="{StaticResource ToolbarBorder}">
-            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="8" RowDefinitions="Auto">
+            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="8" VerticalOptions="Center" RowDefinitions="Auto">
 
-                <!-- Environment picker -->
-                <Border Grid.Column="0" Style="{StaticResource PickerFieldBorder}">
-                    <Picker Title="Select environment"
-                            ItemsSource="{Binding Environments}"
-                            SelectedItem="{Binding SelectedEnvironment}"
-                            ItemDisplayBinding="{Binding Name}"
-                            MinimumWidthRequest="220" />
-                </Border>
+                <!-- Environment selector -->
+                <controls:RotaryKnobView Grid.Column="0"
+                                         ItemsSource="{Binding Environments}"
+                                         SelectedItem="{Binding SelectedEnvironment}"
+                                         ItemDisplayBinding="{Binding Name}"
+                                         VerticalOptions="Center" />
 
                 <!-- Add environment -->
-                <Button Grid.Column="1"
+                <controls:SteampunkButton Grid.Column="1"
                         Text="New"
-                        Style="{StaticResource SecondaryButton}"
+                        Variant="Secondary"
                         Command="{Binding AddEnvironmentCommand}"
                         ToolTipProperties.Text="Add environment" />
 
                 <!-- Edit environment -->
-                <Button Grid.Column="2"
+                <controls:SteampunkButton Grid.Column="2"
                         Text="Edit"
-                        Style="{StaticResource SecondaryButton}"
+                        Variant="Secondary"
                         Command="{Binding EditEnvironmentCommand}"
                         ToolTipProperties.Text="Edit selected environment" />
 
                 <!-- Clone environment -->
-                <Button Grid.Column="3"
+                <controls:SteampunkButton Grid.Column="3"
                         Text="Clone"
-                        Style="{StaticResource SecondaryButton}"
+                        Variant="Secondary"
                         Command="{Binding CloneEnvironmentCommand}"
                         ToolTipProperties.Text="Clone selected environment" />
 
                 <!-- Delete environment -->
-                <Button Grid.Column="4"
+                <controls:SteampunkButton Grid.Column="4"
                         Text="Delete"
-                        Style="{StaticResource DangerButton}"
+                        Variant="Danger"
                         Command="{Binding DeleteEnvironmentCommand}"
                         ToolTipProperties.Text="Delete selected environment" />
 
@@ -54,40 +53,39 @@
                 <BoxView Grid.Column="5" BackgroundColor="Transparent" />
 
                 <!-- Export config -->
-                <Button Grid.Column="6"
+                <controls:SteampunkButton Grid.Column="6"
                         Text="Export"
-                        Style="{StaticResource SecondaryButton}"
+                        Variant="Secondary"
                         Command="{Binding ExportConfigCommand}"
                         ToolTipProperties.Text="Export configuration to JSON file" />
 
                 <!-- Import config -->
-                <Button Grid.Column="7"
+                <controls:SteampunkButton Grid.Column="7"
                         Text="Import"
-                        Style="{StaticResource SecondaryButton}"
+                        Variant="Secondary"
                         Command="{Binding ImportConfigCommand}"
                         ToolTipProperties.Text="Import configuration from JSON file" />
 
                 <!-- Refresh all -->
-                <Button Grid.Column="8"
+                <controls:SteampunkButton Grid.Column="8"
                         Text="Refresh"
-                        Style="{StaticResource SecondaryButton}"
+                        Variant="Secondary"
                         Command="{Binding RefreshAllCommand}"
                         ToolTipProperties.Text="Check all modules now" />
 
                 <!-- Add module -->
-                <Button Grid.Column="9"
+                <controls:SteampunkButton Grid.Column="9"
                         Text="+ Add Module"
-                        Style="{StaticResource PrimaryButton}"
+                        Variant="Primary"
                         Command="{Binding AddModuleCommand}" />
 
                 <!-- Settings -->
-                <Button Grid.Column="10"
+                <controls:SteampunkButton Grid.Column="10"
                         Text="⚙"
-                        Style="{StaticResource SecondaryButton}"
+                        Variant="Secondary"
                         Command="{Binding OpenSettingsCommand}"
                         ToolTipProperties.Text="Settings"
-                        MinimumWidthRequest="40"
-                        Padding="10,8" />
+                        MinimumWidthRequest="40" />
             </Grid>
         </Border>
 
@@ -217,9 +215,9 @@
                                Style="{StaticResource SecondaryLabel}"
                                HorizontalTextAlignment="Center"
                                LineBreakMode="WordWrap" />
-                        <Button Grid.Row="2"
+                        <controls:SteampunkButton Grid.Row="2"
                                 Text="+ Add Module"
-                                Style="{StaticResource PrimaryButton}"
+                                Variant="Primary"
                                 Command="{Binding AddModuleCommand}"
                                 HorizontalOptions="Center"
                                 Margin="0,8,0,0" />
@@ -320,13 +318,10 @@
                                            VerticalOptions="Center" />
 
                                     <!-- Per-module refresh -->
-                                    <Button Grid.Column="4"
+                                    <controls:SteampunkButton Grid.Column="4"
                                             Text="↻"
-                                            FontSize="16"
-                                            Padding="4"
+                                            Variant="Icon"
                                             MinimumWidthRequest="36"
-                                            MinimumHeightRequest="36"
-                                            Style="{StaticResource IconButton}"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}}, Path=RefreshModuleCommand}"
                                             CommandParameter="{Binding .}"
                                             VerticalOptions="Center"

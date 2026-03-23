@@ -10,12 +10,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8e42f712-31c8-4973-8929-fdf566b6585a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HCApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HCApp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HCApp/Resources/Styles/Colors.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Resources/Styles/Colors.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HCApp/Resources/Styles/Styles.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Resources/Styles/Styles.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HCApp/HCApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/HCApp.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HCApp/Views/DashboardPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Views/DashboardPage.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HCApp/Views/EnvironmentEditPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Views/EnvironmentEditPage.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HCApp/Views/ModuleDetailPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Views/ModuleDetailPage.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HCApp/Views/SettingsPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/HCApp/Views/SettingsPage.xaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,13 +41,16 @@
     &quot;accountId&quot;: &quot;586191d5-207e-42e7-9d10-2d7b71c0aad1&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/HCApp/Controls/RotaryKnobView.xaml.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="AISelfReview" />
+    <option name="selectedTabId" value="Toolset" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -88,7 +88,7 @@
     <option name="spentUsd" value="0.00683225" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="1" />
+    <option name="suspendCountdown" value="0" />
   </component>
   <component name="RunManager" selected="macOS.HCApp">
     <configuration name="HCApp" type="XamarinIOSProject" factoryName="Xamarin.iOS">
@@ -117,7 +117,7 @@
       <option name="presentableId" value="Default" />
       <updated>1774256436700</updated>
       <workItem from="1774256439174" duration="1095000" />
-      <workItem from="1774257555576" duration="5274000" />
+      <workItem from="1774257555576" duration="7226000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial cross-platform application setup with .NET MAUI">
       <option name="closed" value="true" />
@@ -175,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774262826896</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Update UI styles and color palette to introduce warm brass and aged parchment theme">
+      <option name="closed" value="true" />
+      <created>1774265797309</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774265797309</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,7 +200,8 @@
     <MESSAGE value="Add clone environment, export configuration, and module editing functionality" />
     <MESSAGE value="Add settings page, notifications, and status history functionality" />
     <MESSAGE value="Add environment status bar with visual indicators and selection functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Update UI styles and color palette to introduce warm brass and aged parchment theme" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update UI styles and color palette to introduce warm brass and aged parchment theme" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

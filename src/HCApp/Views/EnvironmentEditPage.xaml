@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HCApp.ViewModels"
              xmlns:models="clr-namespace:HCApp.Models"
+             xmlns:controls="clr-namespace:HCApp.Controls"
              x:Class="HCApp.Views.EnvironmentEditPage"
              x:DataType="vm:EnvironmentEditViewModel"
              Title="Edit Environment">
@@ -91,9 +92,9 @@
                                CharacterSpacing="0.8"
                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                                VerticalOptions="Center" />
-                        <Button Grid.Column="1"
+                        <controls:SteampunkButton Grid.Column="1"
                                 Text="+ Add Module"
-                                Style="{StaticResource SecondaryButton}"
+                                Variant="Secondary"
                                 Command="{Binding AddModuleCommand}"
                                 VerticalOptions="Center" />
                     </Grid>
