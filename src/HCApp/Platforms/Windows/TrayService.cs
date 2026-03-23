@@ -1,48 +1,54 @@
-using System.Windows.Forms;
+using H.NotifyIcon;
+using H.NotifyIcon.Core;
 using Microsoft.UI.Windowing;
 
 namespace HCApp;
 
-/// <summary>
-/// Manages the Windows system-tray icon and window close/minimize interception.
-/// Created once per app lifetime, initialized after the native window is available.
-/// </summary>
 public sealed class TrayService : IDisposable
 {
-    private NotifyIcon? _notifyIcon;
+    private TaskbarIcon?  _trayIcon;
+    private AppWindow?    _appWindow;
     private Microsoft.UI.Xaml.Window? _nativeWindow;
-    private AppWindow? _appWindow;
-    private bool _isExiting;
+    private bool          _isExiting;
+    private bool          _disposed;
 
     public void Initialize(Microsoft.UI.Xaml.Window nativeWindow)
     {
         _nativeWindow = nativeWindow;
 
-        // Resolve the WinUI AppWindow (needed for close interception and hide/show)
         var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
-        var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hwnd);
-        _appWindow = AppWindow.GetFromWindowId(windowId);
+        _appWindow = AppWindow.GetFromWindowId(
+            Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hwnd));
 
-        // Tray icon — reuse the process icon so it matches the taskbar entry
-        _notifyIcon = new NotifyIcon
+        // Build the tray icon with a context menu
+        _trayIcon = new TaskbarIcon
         {
-            Text = "Health Monitor",
-            Icon = Icon.ExtractAssociatedIcon(Environment.ProcessPath ?? string.Empty)
-                   ?? SystemIcons.Application,
-            Visible = false
+            ToolTipText    = "Health Monitor",
+            IconSource     = new GeneratedIconSource
+            {
+                Text            = "HM",
+                BackgroundColor = Windows.UI.Color.FromArgb(255, 26, 32, 48),   // dark iron
+                ForegroundColor = Windows.UI.Color.FromArgb(255, 200, 144, 32), // brass gold
+            },
+            ContextMenuMode = ContextMenuMode.PopupMenu,
         };
 
-        var menu = new ContextMenuStrip();
-        menu.Items.Add("Open Health Monitor", null, (_, _) => ShowWindow());
-        menu.Items.Add(new ToolStripSeparator());
-        menu.Items.Add("Exit", null, (_, _) => ExitApp());
-        _notifyIcon.ContextMenuStrip = menu;
-        _notifyIcon.DoubleClick += (_, _) => ShowWindow();
+        // Context menu
+        var menuOpen = new H.NotifyIcon.Core.PopupMenuItem("Open Health Monitor", (_, _) => ShowWindow());
+        var menuSep  = new H.NotifyIcon.Core.PopupMenuSeparator();
+        var menuExit = new H.NotifyIcon.Core.PopupMenuItem("Exit",                (_, _) => ExitApp());
+        _trayIcon.ContextMenuItems.Add(menuOpen);
+        _trayIcon.ContextMenuItems.Add(menuSep);
+        _trayIcon.ContextMenuItems.Add(menuExit);
 
-        // Intercept the close button — cancel and let the user decide
+        _trayIcon.TrayMouseDoubleClick += (_, _) => ShowWindow();
+
+        _trayIcon.ForceCreate(enablesActAsTaskbarWindow: false);
+
+        // Intercept close button
         _appWindow.Closing += OnClosing;
 
-        // Intercept minimize — send straight to tray
+        // Minimize → straight to tray
         _appWindow.Changed += OnAppWindowChanged;
     }
 
@@ -50,7 +56,6 @@ public sealed class TrayService : IDisposable
     {
         if (_isExiting) return;
 
-        // Cancel the native close synchronously; handle asynchronously after
         args.Cancel = true;
 
         var page = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
@@ -66,7 +71,6 @@ public sealed class TrayService : IDisposable
         {
             case "Minimize to Tray": HideToTray(); break;
             case "Exit":             ExitApp();    break;
-            // "Cancel" → do nothing, window stays open
         }
     }
 
@@ -77,17 +81,9 @@ public sealed class TrayService : IDisposable
             HideToTray();
     }
 
-    private void HideToTray()
-    {
-        _appWindow?.Hide();
-        if (_notifyIcon is not null)
-            _notifyIcon.Visible = true;
-    }
-
+    private void HideToTray()   => _appWindow?.Hide();
     private void ShowWindow()
     {
-        if (_notifyIcon is not null)
-            _notifyIcon.Visible = false;
         _appWindow?.Show();
         _nativeWindow?.Activate();
     }
@@ -95,20 +91,20 @@ public sealed class TrayService : IDisposable
     private void ExitApp()
     {
         _isExiting = true;
-        _notifyIcon?.Dispose();
-        _notifyIcon = null;
-        // Remove handlers before closing so the Closing event doesn't re-cancel
         if (_appWindow is not null)
         {
             _appWindow.Closing -= OnClosing;
             _appWindow.Changed -= OnAppWindowChanged;
         }
+        _trayIcon?.Dispose();
+        _trayIcon = null;
         _nativeWindow?.Close();
     }
 
     public void Dispose()
     {
-        _notifyIcon?.Dispose();
-        _notifyIcon = null;
+        if (_disposed) return;
+        _disposed = true;
+        _trayIcon?.Dispose();
     }
 }
