@@ -4,30 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <!-- ============================================================
-         NEUTRALS
-    ============================================================ -->
-    <Color x:Key="Neutral50">#F8F9FA</Color>
-    <Color x:Key="Neutral100">#F1F3F5</Color>
-    <Color x:Key="Neutral200">#E9ECEF</Color>
-    <Color x:Key="Neutral300">#DEE2E6</Color>
-    <Color x:Key="Neutral400">#CED4DA</Color>
-    <Color x:Key="Neutral500">#ADB5BD</Color>
-    <Color x:Key="Neutral600">#6C757D</Color>
-    <Color x:Key="Neutral700">#495057</Color>
-    <Color x:Key="Neutral800">#343A40</Color>
-    <Color x:Key="Neutral900">#212529</Color>
-    <Color x:Key="Neutral950">#141720</Color>
-
-    <!-- ============================================================
-         BRAND — slate-blue accent, professional ops tone
-    ============================================================ -->
-    <Color x:Key="BrandPrimary">#4F77E3</Color>
-    <Color x:Key="BrandPrimaryHover">#3D62C9</Color>
-    <Color x:Key="BrandPrimarySubtle">#1A2A4A</Color>
-    <Color x:Key="BrandPrimarySubtleLight">#EBF0FC</Color>
-
-    <!-- ============================================================
-         SEMANTIC STATUS COLORS
+         SEMANTIC STATUS COLORS (unchanged)
     ============================================================ -->
     <Color x:Key="StatusHealthy">#2DB87A</Color>
     <Color x:Key="StatusHealthyDim">#1A6845</Color>
@@ -49,61 +26,77 @@
     <Color x:Key="StatusUnknownSubtleLight">#F1F3F5</Color>
 
     <!-- ============================================================
-         SEMANTIC SURFACE — light theme (warm white, clear hierarchy)
+         BRAND — warm brass / amber gold
     ============================================================ -->
-    <Color x:Key="SurfaceLight">#FFFFFF</Color>
-    <Color x:Key="SurfaceSecondaryLight">#F8F9FA</Color>
-    <Color x:Key="SurfaceTertiaryLight">#F1F3F5</Color>
-    <Color x:Key="SurfaceElevatedLight">#FFFFFF</Color>
-    <Color x:Key="SurfaceBorderLight">#E9ECEF</Color>
-    <Color x:Key="SurfaceBorderStrongLight">#CED4DA</Color>
+    <Color x:Key="BrandPrimary">#C89020</Color>
+    <Color x:Key="BrandPrimaryHover">#A87010</Color>
+    <Color x:Key="BrandPrimarySubtle">#2A1E08</Color>
+    <Color x:Key="BrandPrimarySubtleLight">#FDF0D0</Color>
 
     <!-- ============================================================
-         SEMANTIC SURFACE — dark theme (true dark, not grey wash)
+         SURFACES — dark theme (oiled iron + aged wood interior)
     ============================================================ -->
-    <Color x:Key="SurfaceDark">#0E1117</Color>
-    <Color x:Key="SurfaceSecondaryDark">#161B22</Color>
-    <Color x:Key="SurfaceTertiaryDark">#1C2230</Color>
-    <Color x:Key="SurfaceElevatedDark">#21262D</Color>
-    <Color x:Key="SurfaceBorderDark">#30363D</Color>
-    <Color x:Key="SurfaceBorderStrongDark">#484F58</Color>
+    <Color x:Key="SurfaceDark">#110E09</Color>
+    <Color x:Key="SurfaceSecondaryDark">#1A1510</Color>
+    <Color x:Key="SurfaceTertiaryDark">#22190F</Color>
+    <Color x:Key="SurfaceElevatedDark">#2A2015</Color>
+    <Color x:Key="SurfaceBorderDark">#4A3C28</Color>
+    <Color x:Key="SurfaceBorderStrongDark">#7A6240</Color>
 
     <!-- ============================================================
-         ON-SURFACE TEXT
+         SURFACES — light theme (aged parchment)
     ============================================================ -->
-    <Color x:Key="TextPrimaryLight">#1A1D23</Color>
-    <Color x:Key="TextSecondaryLight">#495057</Color>
-    <Color x:Key="TextTertiaryLight">#6C757D</Color>
-    <Color x:Key="TextDisabledLight">#ADB5BD</Color>
-
-    <Color x:Key="TextPrimaryDark">#E6EDF3</Color>
-    <Color x:Key="TextSecondaryDark">#8B949E</Color>
-    <Color x:Key="TextTertiaryDark">#6E7681</Color>
-    <Color x:Key="TextDisabledDark">#484F58</Color>
+    <Color x:Key="SurfaceLight">#F5EDD8</Color>
+    <Color x:Key="SurfaceSecondaryLight">#EDE0C4</Color>
+    <Color x:Key="SurfaceTertiaryLight">#E3D4B0</Color>
+    <Color x:Key="SurfaceElevatedLight">#F8F2E4</Color>
+    <Color x:Key="SurfaceBorderLight">#C4A96A</Color>
+    <Color x:Key="SurfaceBorderStrongLight">#A07840</Color>
 
     <!-- ============================================================
-         LEGACY ALIASES (kept for any default MAUI styles that reference them)
+         ON-SURFACE TEXT — dark theme
     ============================================================ -->
-    <Color x:Key="Primary">#4F77E3</Color>
-    <Color x:Key="PrimaryDark">#7A9AEB</Color>
-    <Color x:Key="PrimaryDarkText">#E6EDF3</Color>
-    <Color x:Key="Secondary">#EBF0FC</Color>
-    <Color x:Key="SecondaryDarkText">#7A9AEB</Color>
-    <Color x:Key="Tertiary">#3D62C9</Color>
+    <Color x:Key="TextPrimaryDark">#E8D5A0</Color>
+    <Color x:Key="TextSecondaryDark">#A09070</Color>
+    <Color x:Key="TextTertiaryDark">#6B5A3A</Color>
+    <Color x:Key="TextDisabledDark">#3A3020</Color>
+
+    <!-- ============================================================
+         ON-SURFACE TEXT — light theme
+    ============================================================ -->
+    <Color x:Key="TextPrimaryLight">#2A1E08</Color>
+    <Color x:Key="TextSecondaryLight">#5A4020</Color>
+    <Color x:Key="TextTertiaryLight">#8A6840</Color>
+    <Color x:Key="TextDisabledLight">#C4A96A</Color>
+
+    <!-- ============================================================
+         LEGACY ALIASES
+    ============================================================ -->
+    <Color x:Key="Primary">#C89020</Color>
+    <Color x:Key="PrimaryDark">#E8C060</Color>
+    <Color x:Key="PrimaryDarkText">#E8D5A0</Color>
+    <Color x:Key="Secondary">#FDF0D0</Color>
+    <Color x:Key="SecondaryDarkText">#C89020</Color>
+    <Color x:Key="Tertiary">#A87010</Color>
     <Color x:Key="White">#FFFFFF</Color>
     <Color x:Key="Black">#000000</Color>
-    <Color x:Key="OffBlack">#0E1117</Color>
-    <Color x:Key="Magenta">#4F77E3</Color>
-    <Color x:Key="MidnightBlue">#0E1117</Color>
+    <Color x:Key="OffBlack">#110E09</Color>
+    <Color x:Key="Magenta">#C89020</Color>
+    <Color x:Key="MidnightBlue">#110E09</Color>
 
-    <Color x:Key="Gray100">#F1F3F5</Color>
-    <Color x:Key="Gray200">#E9ECEF</Color>
-    <Color x:Key="Gray300">#DEE2E6</Color>
-    <Color x:Key="Gray400">#CED4DA</Color>
-    <Color x:Key="Gray500">#ADB5BD</Color>
-    <Color x:Key="Gray600">#495057</Color>
-    <Color x:Key="Gray900">#212529</Color>
-    <Color x:Key="Gray950">#141720</Color>
+    <Color x:Key="Gray100">#F5EDD8</Color>
+    <Color x:Key="Gray200">#EDE0C4</Color>
+    <Color x:Key="Gray300">#E3D4B0</Color>
+    <Color x:Key="Gray400">#C4A96A</Color>
+    <Color x:Key="Gray500">#A09070</Color>
+    <Color x:Key="Gray600">#6B5A3A</Color>
+    <Color x:Key="Gray900">#22190F</Color>
+    <Color x:Key="Gray950">#110E09</Color>
+
+    <!-- Neutral scale (kept for disabled button states) -->
+    <Color x:Key="Neutral200">#E3D4B0</Color>
+    <Color x:Key="Neutral700">#22190F</Color>
+    <Color x:Key="Neutral800">#1A1510</Color>
 
     <!-- ============================================================
          BRUSHES

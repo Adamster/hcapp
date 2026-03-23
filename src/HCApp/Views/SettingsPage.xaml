@@ -11,8 +11,13 @@
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="20" Padding="32,28">
 
-                <Label Text="Notifications"
-                       Style="{StaticResource TitleLabel}"
+                <!-- Notifications section — stamped plaque -->
+                <Label Text="NOTIFICATIONS"
+                       Style="{StaticResource CaptionLabel}"
+                       FontFamily="Courier New"
+                       FontSize="{StaticResource FontSizeBodyLarge}"
+                       CharacterSpacing="0.8"
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                        Margin="0,0,0,4" />
 
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
@@ -25,8 +30,13 @@
                             VerticalOptions="Center" />
                 </Grid>
 
-                <Label Text="Polling"
-                       Style="{StaticResource TitleLabel}"
+                <!-- Polling section — stamped plaque -->
+                <Label Text="POLLING"
+                       Style="{StaticResource CaptionLabel}"
+                       FontFamily="Courier New"
+                       FontSize="{StaticResource FontSizeBodyLarge}"
+                       CharacterSpacing="0.8"
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                        Margin="0,12,0,4" />
 
                 <VerticalStackLayout Spacing="6">
@@ -46,9 +56,10 @@
             </VerticalStackLayout>
         </ScrollView>
 
+        <!-- Footer separator — brass seam -->
         <BoxView Grid.Row="1"
                  HeightRequest="1"
-                 BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBorderLight}, Dark={StaticResource SurfaceBorderDark}}" />
+                 BackgroundColor="#4A3C28" />
 
         <Border Grid.Row="2"
                 StrokeShape="Rectangle"

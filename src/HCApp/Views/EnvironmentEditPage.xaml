@@ -16,9 +16,13 @@
                 <!-- Left column: connection settings -->
                 <VerticalStackLayout Grid.Column="0" Spacing="20" Margin="0,0,24,0">
 
-                    <!-- Connection section -->
-                    <Label Text="Connection"
-                           Style="{StaticResource TitleLabel}"
+                    <!-- Connection section — stamped plaque -->
+                    <Label Text="CONNECTION"
+                           Style="{StaticResource CaptionLabel}"
+                           FontFamily="Courier New"
+                           FontSize="{StaticResource FontSizeBodyLarge}"
+                           CharacterSpacing="0.8"
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                            Margin="0,0,0,4" />
 
                     <VerticalStackLayout Spacing="6">
@@ -51,9 +55,13 @@
                         </Border>
                     </VerticalStackLayout>
 
-                    <!-- Headers section -->
-                    <Label Text="Request Headers"
-                           Style="{StaticResource TitleLabel}"
+                    <!-- Headers section — stamped plaque -->
+                    <Label Text="REQUEST HEADERS"
+                           Style="{StaticResource CaptionLabel}"
+                           FontFamily="Courier New"
+                           FontSize="{StaticResource FontSizeBodyLarge}"
+                           CharacterSpacing="0.8"
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                            Margin="0,12,0,4" />
 
                     <VerticalStackLayout Spacing="6">
@@ -74,9 +82,14 @@
                 <VerticalStackLayout Grid.Column="1" Spacing="12">
 
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <!-- Modules section — stamped plaque -->
                         <Label Grid.Column="0"
-                               Text="Modules"
-                               Style="{StaticResource TitleLabel}"
+                               Text="MODULES"
+                               Style="{StaticResource CaptionLabel}"
+                               FontFamily="Courier New"
+                               FontSize="{StaticResource FontSizeBodyLarge}"
+                               CharacterSpacing="0.8"
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                                VerticalOptions="Center" />
                         <Button Grid.Column="1"
                                 Text="+ Add Module"
@@ -114,6 +127,8 @@
                                                    HorizontalOptions="Fill" />
                                             <Label Text="{Binding HealthCheckPath}"
                                                    Style="{StaticResource CaptionLabel}"
+                                                   FontFamily="Courier New"
+                                                   CharacterSpacing="0.4"
                                                    LineBreakMode="TailTruncation"
                                                    HorizontalOptions="Fill" />
                                         </VerticalStackLayout>
@@ -143,10 +158,10 @@
             </Grid>
         </ScrollView>
 
-        <!-- Footer separator -->
+        <!-- Footer separator — brass seam -->
         <BoxView Grid.Row="1"
                  HeightRequest="1"
-                 BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBorderLight}, Dark={StaticResource SurfaceBorderDark}}" />
+                 BackgroundColor="#4A3C28" />
 
         <!-- Footer action bar -->
         <Border Grid.Row="2"
