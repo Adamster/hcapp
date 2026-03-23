@@ -25,6 +25,9 @@ public sealed class HealthCheckEntry
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
+    [JsonPropertyName("exception")]
+    public string? Exception { get; set; }
+
     [JsonPropertyName("data")]
     public Dictionary<string, object>? Data { get; set; }
 
